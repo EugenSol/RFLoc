@@ -55,7 +55,7 @@ def fisher_matrix(x,y):
     return F
 
 
-Z = np.zeros((100,100))
+CRLB = np.zeros((100,100))
 
 for i in range(100):
     for j in range(100):
