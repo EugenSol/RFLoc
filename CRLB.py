@@ -2,6 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 x_list = np.linspace(-500, 2000, 100)
 y_list = np.linspace(-250, 1250, 100)
 X, Y = np.meshgrid(x_list, y_list)
@@ -31,19 +32,19 @@ def dCov_i(txpos_i, rxpos, d_var):
 
 def dRSS_i(txpos_i, rxpos, d_var): # compute derivative of RSS signal
     dist_eval = dist(txpos_i, rxpos)
-    return -20 / (np.log(10)*dist_eval**2) * (txpos_i[d_var] - rxpos[d_var]) - 20 * alpha *np.log10(np.exp(1))*(txpos_i[d_var] - rxpos[d_var])/dist_eval
+    return -20 / (np.log(10)*dist_eval**2) * (txpos_i[d_var] - rxpos[d_var]) - 20 * alpha * np.log10(np.exp(1)) * (txpos_i[d_var] - rxpos[d_var])/dist_eval
 
-def fisher_matrix(x,y):
+def fisher_matrix(x,y):  # compute Fisher information matrix for position (x,y)
     F = np.zeros([2, 2]) # initialize Fisher information matrix
     #
-    for m in range(0,2):
-        for n in range(0,2):
+    for m in range(2):
+        for n in range(2):
             dmu_T = np.array([])
             dmu = np.array([])
             C = np.array([])
             dC_m = np.array([])
             dC_n = np.array([])
-            for N in range(0, n_tx):
+            for N in range(n_tx):
                 dmu_T = np.append(dmu_T, dRSS_i(txpos[N], [x,y], m) )
                 dmu = np.append(dmu, dRSS_i(txpos[N], [x,y], n) )
                 C = np.append(C, measCov_i( dist(txpos[N], [x,y]) ) )
