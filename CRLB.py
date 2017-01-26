@@ -63,5 +63,15 @@ for i in range(100):
         # CRLB is the worst case of the covariance matrix
         CRLB[i,j] = np.amax(np.linalg.inv(fisher_matrix(X[i,j],Y[i,j])))
 
+maxVar = np.amin(CRLB)
+CRLB = CRLB/maxVar
+
 plt.pcolor(X, Y, CRLB)
-plt.show()
+plt.xlabel('$x$ in mm')
+plt.ylabel('$y$ in mm')
+plt.colorbar()
+
+#plt.show()
+
+from matplotlib2tikz import save as tikz_save
+tikz_save('crlb.tex')
