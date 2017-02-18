@@ -20,7 +20,6 @@ def comp_mean(self, particles):
     return m_x/count, m_y/count
 
 
-
 def start(self, world_x, world_y):
     """ Particle Ini """
     particles = []  # initialize Particle set
