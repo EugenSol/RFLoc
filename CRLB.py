@@ -2,9 +2,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-
-x_list = np.linspace(-500, 2000, 100)
-y_list = np.linspace(-250, 1250, 100)
+discretization = 100
+x_list = np.linspace(-500, 2000, discretization)
+y_list = np.linspace(-250, 1250, discretization)
 X, Y = np.meshgrid(x_list, y_list)
 
 txpos = np.array([[1500, 1000],
@@ -56,22 +56,28 @@ def fisher_matrix(x,y):  # compute Fisher information matrix for position (x,y)
     return F
 
 
-CRLB = np.zeros((100,100))
+CRLB = np.zeros((discretization, discretization))
 
-for i in range(100):
-    for j in range(100):
+for i in range(discretization):
+    for j in range(discretization):
         # CRLB is the worst case of the covariance matrix
         CRLB[i,j] = np.amax(np.linalg.inv(fisher_matrix(X[i,j],Y[i,j])))
 
 maxVar = np.amin(CRLB)
 CRLB = CRLB/maxVar
 
+markers_on = txpos
 plt.pcolor(X, Y, CRLB)
 plt.xlabel('$x$ in mm')
 plt.ylabel('$y$ in mm')
 plt.colorbar()
+plt.plot(*zip(*txpos), marker='o', color='k', markersize=20, ls='')
 
 #plt.show()
-
+plt.savefig('11_crlb.pdf')
 from matplotlib2tikz import save as tikz_save
-tikz_save('crlb.tex')
+tikz_save(
+    '11_crlb.tex'
+    # figureheight = '\\figureheight',
+    # figurewidth = '\\figurewidth'
+    )
