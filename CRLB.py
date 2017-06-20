@@ -65,6 +65,7 @@ for i in range(discretization):
 
 maxVar = np.amin(CRLB)
 CRLB = CRLB/maxVar
+np.savetxt('CRLB.txt', CRLB, fmt='%.18g', delimiter=',')   # X is an array
 
 markers_on = txpos
 plt.pcolor(X, Y, CRLB)
@@ -74,10 +75,4 @@ plt.colorbar()
 plt.plot(*zip(*txpos), marker='o', color='k', markersize=20, ls='')
 
 #plt.show()
-plt.savefig('11_crlb.pdf')
-from matplotlib2tikz import save as tikz_save
-tikz_save(
-    '11_crlb.tex'
-    # figureheight = '\\figureheight',
-    # figurewidth = '\\figurewidth'
-    )
+#plt.savefig('11_crlb.pdf')
